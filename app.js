@@ -1,13 +1,11 @@
 // ============================================
-//  AENNAS — Main App JavaScript
-//  Firebase + Google Sheets Integration
+//  AENNAS — Main App JS v2
+//  Infinite Circular Slider | Firebase | Sheets
 // ============================================
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, getDocs, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-import { getStorage } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+import { getFirestore, collection, query, orderBy, onSnapshot, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-// --- Firebase Init ---
 const firebaseConfig = {
     apiKey: "AIzaSyDOZrjLwarenvRNIQMjozUqqfktEtQCfqQ",
     authDomain: "aennasreal.firebaseapp.com",
@@ -19,37 +17,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// --- Google Sheets Config ---
+// Google Sheets
 const SHEET_ID = "1IC_-L2Fd3lppYKiHgVEilLra-L90FJ6_uvrQ6a4dU7k";
-const SERVICE_ACCOUNT_EMAIL = "aennas-sheets@aennas-store.iam.gserviceaccount.com";
-const SERVICE_ACCOUNT_KEY = `-----BEGIN PRIVATE KEY-----
-MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCszjkSAYac89FW
-PerR6csytymAjAEsVf/OAitduhMdmL6/kLVEyJZSeQr/8OPwEdtYMqTikXZ3f7Ng
-biHpM0YYd+98UBQIdEHW7VP7sPzCoUXr9I+z/7NLSBWwHH/WOG3brqy5zAcoYI1r
-Fr9tBFfDmbs4WkPLnE4nbOqFNjwtkW3+6z1JgIERNzxnt2vmaNDUBVEOKoqCOPRR
-QLMVAGTSld+MaPxu50ybLedbgf7zCJqqWKgl3u+2/HjZ+j8FXmEWkLyriMGr2Xd8
-3sH9ucNXRNf+QTuSwJXHQzinVYKa0BhzZz0u6Rcl0IYRGQd9QKdl017IsCkWvyuA
-WYzalLuzAgMBAAECggEAIOva4IzM3frvXzxFj784OI2/iN9jW9R4ewFbzKvl92YB
-tRI3DoceaFDqIQ9+BV8JiDiBxC5NQP/hpxXkPP7JNGEpDWheIKwxXOZy8QjrZpL9
-9LFvbS3iNQ3jH92WFzRB7a/N9Umi9XTLjGLVjkndBIU1r0s3DkPVedpcpYtLFK0H
-gGAH7j2MDpfLYEzKrwTyFuQFZj7NaI5algO9tiRC2dupTnG26MJk3DI8ZDAw/LL5
-D4fFJ6nny29bsloTa9cGn8YpXKsbkOL9xhKiTTOxox0ClIs9/Qf0cFrePUQQciiK
-mJddLq5lUimAsomS1Ps11HCgPa0avoYJmB9S9KChrQKBgQDUA30AmCMV2S++3lDU
-MZEesvX9t976eJDSIWpkaaM0Utojpt6lvhb1TjtHPell2yDnNDaTviavy1syhK+f
-sn3e2qkSXy9qGmaGjV+XEpI1QimUt1c845dS5dQaWI1qz+cpnY8ZOXBBMpJ0jYaY
-fiMeMcli75foF6VzM7M2aavE3QKBgQDQqE6/S98j4iG3IUIy32fgTpi0h6IloEBu
-yAzvXCkxMOqiDKlC57I9L+mU3E9yegwZpFokvN7mcfe3S2Hwl5tUZuKg9lYTwIOm
-AM3IH9wNmXSVZMAtPiKeX1TMwu3oZ1/hZHLtnNfCCjCXDeUt5Vn8J5gXgF4nJhpn
-hX+IW8dxzwKBgQCRdnc8giWIZwQ4O8ZPYFbGLllSo+ZMCY6rbZvWmxgL3VCnp2UZ
-aKvN0MghIBxT8x3HI+7SPWPDt42xwpHQyyFLVtErtr0MWmK/rJ3KREamXeezjns/
-XpPDn8Z/8QPOJijfR6gX0W3wfac4aqXPWLP1koku5V5fMmIlAXLTQXtFzQKBgGJK
-Zo4Gl563r1os+JouUyh+3cBtBBzlWHTXGADJUT4y5NRhUnqJ2pSoNUhCX8p1Y63Q
-lgYoUngLx704bXKAeFNSA///Cp1TWrCgQE+9clOVri2RwFWPp48jKTcrvBZ2W9w5
-DUqRT7HASxNdIFB2ceUuYZ7wgWm/sUCCyojZcyJRAoGAJlOnZBFwPKzLUW3vLPZZ
-pSXodycZwvAqcP39bVr3UOQqkn2SEbRVCHZBZvTRqa1SuSw0G86Z7rI18ieJJ8jh
-rMY9eFzwC/s87x/JYAHKAMbAfHx0GvVFEcLtg1sfvXX+Vljd+dfTQnoOT4MbK0vM
-o5Z/Mj2EmTl4SjZSwxzlEfQ=
------END PRIVATE KEY-----`;
+const SA_EMAIL = "aennas-sheets@aennas-store.iam.gserviceaccount.com";
+const SA_KEY = `-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCszjkSAYac89FW\nPerR6csytymAjAEsVf/OAitduhMdmL6/kLVEyJZSeQr/8OPwEdtYMqTikXZ3f7Ng\nbiHpM0YYd+98UBQIdEHW7VP7sPzCoUXr9I+z/7NLSBWwHH/WOG3brqy5zAcoYI1r\nFr9tBFfDmbs4WkPLnE4nbOqFNjwtkW3+6z1JgIERNzxnt2vmaNDUBVEOKoqCOPRR\nQLMVAGTSld+MaPxu50ybLedbgf7zCJqqWKgl3u+2/HjZ+j8FXmEWkLyriMGr2Xd8\n3sH9ucNXRNf+QTuSwJXHQzinVYKa0BhzZz0u6Rcl0IYRGQd9QKdl017IsCkWvyuA\nWYzalLuzAgMBAAECggEAIOva4IzM3frvXzxFj784OI2/iN9jW9R4ewFbzKvl92YB\ntRI3DoceaFDqIQ9+BV8JiDiBxC5NQP/hpxXkPP7JNGEpDWheIKwxXOZy8QjrZpL9\n9LFvbS3iNQ3jH92WFzRB7a/N9Umi9XTLjGLVjkndBIU1r0s3DkPVedpcpYtLFK0H\ngGAH7j2MDpfLYEzKrwTyFuQFZj7NaI5algO9tiRC2dupTnG26MJk3DI8ZDAw/LL5\nD4fFJ6nny29bsloTa9cGn8YpXKsbkOL9xhKiTTOxox0ClIs9/Qf0cFrePUQQciiK\nmJddLq5lUimAsomS1Ps11HCgPa0avoYJmB9S9KChrQKBgQDUA30AmCMV2S++3lDU\nMZEesvX9t976eJDSIWpkaaM0Utojpt6lvhb1TjtHPell2yDnNDaTviavy1syhK+f\nsn3e2qkSXy9qGmaGjV+XEpI1QimUt1c845dS5dQaWI1qz+cpnY8ZOXBBMpJ0jYaY\nfiMeMcli75foF6VzM7M2aavE3QKBgQDQqE6/S98j4iG3IUIy32fgTpi0h6IloEBu\nyAzvXCkxMOqiDKlC57I9L+mU3E9yegwZpFokvN7mcfe3S2Hwl5tUZuKg9lYTwIOm\nAM3IH9wNmXSVZMAtPiKeX1TMwu3oZ1/hZHLtnNfCCjCXDeUt5Vn8J5gXgF4nJhpn\nhX+IW8dxzwKBgQCRdnc8giWIZwQ4O8ZPYFbGLllSo+ZMCY6rbZvWmxgL3VCnp2UZ\naKvN0MghIBxT8x3HI+7SPWPDt42xwpHQyyFLVtErtr0MWmK/rJ3KREamXeezjns/\nXpPDn8Z/8QPOJijfR6gX0W3wfac4aqXPWLP1koku5V5fMmIlAXLTQXtFzQKBgGJK\nZo4Gl563r1os+JouUyh+3cBtBBzlWHTXGADJUT4y5NRhUnqJ2pSoNUhCX8p1Y63Q\nlgYoUngLx704bXKAeFNSA///Cp1TWrCgQE+9clOVri2RwFWPp48jKTcrvBZ2W9w5\nDUqRT7HASxNdIFB2ceUuYZ7wgWm/sUCCyojZcyJRAoGAJlOnZBFwPKzLUW3vLPZZ\npSXodycZwvAqcP39bVr3UOQqkn2SEbRVCHZBZvTRqa1SuSw0G86Z7rI18ieJJ8jh\nrMY9eFzwC/s87x/JYAHKAMbAfHx0GvVFEcLtg1sfvXX+Vljd+dfTQnoOT4MbK0vM\no5Z/Mj2EmTl4SjZSwxzlEfQ=\n-----END PRIVATE KEY-----`;
 
 // ============================================
 // STATE
@@ -57,49 +28,17 @@ o5Z/Mj2EmTl4SjZSwxzlEfQ=
 let cart = JSON.parse(localStorage.getItem('aennas_cart') || '[]');
 let allProducts = [];
 let currentSlide = 0;
-const totalSlides = 4;
+const TOTAL_SLIDES = 4;
 let autoSlideInterval;
-let currentProductDetail = null;
+let isAnimating = false;
 
 // ============================================
-// SLIDER
+// PAGE LOADER
 // ============================================
-function initSlider() {
-    const dotsContainer = document.getElementById('sliderDots');
-    for (let i = 0; i < totalSlides; i++) {
-        const dot = document.createElement('div');
-        dot.className = 'dot' + (i === 0 ? ' active' : '');
-        dot.onclick = () => goToSlide(i);
-        dotsContainer.appendChild(dot);
-    }
-    startAutoSlide();
-}
-
-function goToSlide(n) {
-    currentSlide = ((n % totalSlides) + totalSlides) % totalSlides;
-    document.getElementById('slider').style.transform = `translateX(-${currentSlide * 25}%)`;
-    document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === currentSlide));
-}
-
-window.changeSlide = function (dir) {
-    goToSlide(currentSlide + dir);
-    resetAutoSlide();
-};
-
-function startAutoSlide() {
-    autoSlideInterval = setInterval(() => goToSlide(currentSlide + 1), 5000);
-}
-function resetAutoSlide() {
-    clearInterval(autoSlideInterval);
-    startAutoSlide();
-}
-
-// Touch swipe
-let touchStartX = 0;
-document.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX);
-document.addEventListener('touchend', e => {
-    const diff = touchStartX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) { changeSlide(diff > 0 ? 1 : -1); }
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        document.getElementById('pageLoader').classList.add('hidden');
+    }, 2400);
 });
 
 // ============================================
@@ -110,42 +49,137 @@ window.addEventListener('scroll', () => {
 });
 
 // ============================================
-// LOAD PRODUCTS FROM FIRESTORE
+// MOBILE MENU
 // ============================================
-async function loadProducts() {
-    try {
-        const q = query(collection(db, 'products'), orderBy('createdAt', 'desc'));
-        onSnapshot(q, (snapshot) => {
-            allProducts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            renderCategories(allProducts);
-            renderProducts(allProducts);
-            updateProductCount(allProducts.length);
-        });
-    } catch (e) {
-        console.error('Load products error:', e);
-        document.getElementById('productsGrid').innerHTML = `
-      <div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text-muted)">
-        <p>No products yet. Add products from the admin panel.</p>
-      </div>`;
+window.toggleMobileMenu = function () {
+    const nav = document.getElementById('navLinks');
+    const ham = document.getElementById('hamburger');
+    const overlay = document.getElementById('mobileOverlay');
+    nav.classList.toggle('open');
+    ham.classList.toggle('open');
+    overlay.classList.toggle('active');
+};
+window.closeMobileMenu = function () {
+    document.getElementById('navLinks').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+    document.getElementById('mobileOverlay').classList.remove('active');
+};
+
+// ============================================
+// CIRCULAR SLIDER (4→1 goes RIGHT, not left)
+// ============================================
+function initSlider() {
+    const dotsWrap = document.getElementById('sliderDots');
+    for (let i = 0; i < TOTAL_SLIDES; i++) {
+        const d = document.createElement('div');
+        d.className = 'dot' + (i === 0 ? ' active' : '');
+        d.onclick = () => goToSlide(i, i > currentSlide ? 1 : -1);
+        dotsWrap.appendChild(d);
     }
+    startAuto();
 }
 
-function updateProductCount(count) {
-    const el = document.getElementById('stat-products');
-    if (el) el.textContent = count + '+';
+function goToSlide(next, direction) {
+    if (isAnimating || next === currentSlide) return;
+    isAnimating = true;
+
+    const slides = document.querySelectorAll('.slide');
+    const prevSlide = slides[currentSlide];
+    const nextSlide = slides[next];
+
+    // Remove active from current
+    prevSlide.classList.remove('active');
+
+    // Add direction animation class to incoming slide
+    nextSlide.classList.remove('slide-in-right', 'slide-in-left');
+    void nextSlide.offsetWidth; // force reflow
+    nextSlide.classList.add(direction >= 0 ? 'slide-in-right' : 'slide-in-left');
+    nextSlide.classList.add('active');
+
+    // Update dots
+    document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === next));
+
+    currentSlide = next;
+
+    setTimeout(() => {
+        nextSlide.classList.remove('slide-in-right', 'slide-in-left');
+        isAnimating = false;
+    }, 950);
+}
+
+window.changeSlide = function (dir) {
+    resetAuto();
+    // CIRCULAR: 4 → 1 goes dir=+1 (comes from RIGHT), 1 → 4 goes dir=-1 (comes from LEFT)
+    const next = ((currentSlide + dir) % TOTAL_SLIDES + TOTAL_SLIDES) % TOTAL_SLIDES;
+    goToSlide(next, dir);
+};
+
+function startAuto() {
+    autoSlideInterval = setInterval(() => {
+        const next = (currentSlide + 1) % TOTAL_SLIDES;
+        goToSlide(next, 1); // always moves right (+1)
+    }, 5000);
+}
+function resetAuto() {
+    clearInterval(autoSlideInterval);
+    startAuto();
+}
+
+// Touch swipe support
+let touchStartX = 0;
+document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+document.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) window.changeSlide(diff > 0 ? 1 : -1);
+});
+
+// ============================================
+// SCROLL REVEAL
+// ============================================
+function initScrollReveal() {
+    const targets = document.querySelectorAll('.pillar, .stat, .about-text, .section-header, .product-card');
+    targets.forEach(el => el.classList.add('reveal'));
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((e, i) => {
+            if (e.isIntersecting) {
+                setTimeout(() => e.target.classList.add('visible'), i * 80);
+                observer.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    targets.forEach(el => observer.observe(el));
+}
+
+// ============================================
+// LOAD PRODUCTS
+// ============================================
+function loadProducts() {
+    try {
+        const q = query(collection(db, 'products'), orderBy('createdAt', 'desc'));
+        onSnapshot(q, snap => {
+            allProducts = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+            renderCategories(allProducts);
+            renderProducts(allProducts);
+            const el = document.getElementById('stat-products');
+            if (el) el.textContent = allProducts.length + '+';
+        });
+    } catch (e) {
+        document.getElementById('productsGrid').innerHTML =
+            `<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text-muted)"><p>Add products from the admin panel.</p></div>`;
+    }
 }
 
 function renderCategories(products) {
     const cats = [...new Set(products.map(p => p.category).filter(Boolean))];
-    const filter = document.getElementById('categoryFilter');
-    filter.innerHTML = `<button class="cat-btn active" data-cat="all" onclick="filterCategory('all')">All</button>`;
-    cats.forEach(cat => {
-        const btn = document.createElement('button');
-        btn.className = 'cat-btn';
-        btn.dataset.cat = cat;
-        btn.textContent = cat;
-        btn.onclick = () => filterCategory(cat);
-        filter.appendChild(btn);
+    const wrap = document.getElementById('categoryFilter');
+    wrap.innerHTML = `<button class="cat-btn active" data-cat="all" onclick="filterCategory('all')">All</button>`;
+    cats.forEach(c => {
+        const b = document.createElement('button');
+        b.className = 'cat-btn'; b.dataset.cat = c; b.textContent = c;
+        b.onclick = () => filterCategory(c);
+        wrap.appendChild(b);
     });
 }
 
@@ -162,13 +196,13 @@ function renderProducts(products) {
         return;
     }
     grid.innerHTML = products.map((p, i) => `
-    <div class="product-card" style="animation-delay:${i * 0.07}s" onclick="openProductDetail('${p.id}')">
+    <div class="product-card reveal" style="animation-delay:${i * 0.06}s" onclick="openProductDetail('${p.id}')">
       <div class="product-img-wrap">
         ${p.imageUrl
             ? `<img src="${p.imageUrl}" alt="${p.name}" loading="lazy"/>`
-            : `<div class="product-no-img">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-              <span style="font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.1em;color:var(--text-dim)">No Image</span>
+            : `<div class="product-no-img" style="min-height:200px">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              <span style="font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.1em;color:var(--text-dim)">No Image</span>
             </div>`
         }
         ${p.badge ? `<span class="product-badge">${p.badge}</span>` : ''}
@@ -178,22 +212,29 @@ function renderProducts(products) {
         <h3 class="product-name">${p.name}</h3>
         <p class="product-price">৳${Number(p.price).toLocaleString()}</p>
         <div class="product-actions" onclick="event.stopPropagation()">
-          <button class="btn-cart" onclick="addToCart('${p.id}')">Add to Cart</button>
+          <button class="btn-cart" onclick="addToCart('${p.id}')">+ Cart</button>
           <button class="btn-buy" onclick="buyNow('${p.id}')">Buy Now</button>
         </div>
       </div>
     </div>`).join('');
+
+    // Re-observe new cards
+    setTimeout(() => {
+        document.querySelectorAll('.product-card.reveal:not(.visible)').forEach((el, i) => {
+            setTimeout(() => el.classList.add('visible'), i * 60);
+        });
+    }, 100);
 }
 
 // ============================================
-// PRODUCT DETAIL MODAL
+// PRODUCT DETAIL
 // ============================================
 window.openProductDetail = function (id) {
     const p = allProducts.find(x => x.id === id);
     if (!p) return;
-    currentProductDetail = p;
-    document.getElementById('pdImg').src = p.imageUrl || '';
-    document.getElementById('pdImg').style.display = p.imageUrl ? 'block' : 'none';
+    const img = document.getElementById('pdImg');
+    img.src = p.imageUrl || '';
+    img.style.display = p.imageUrl ? 'block' : 'none';
     document.getElementById('pdCategory').textContent = p.category || '';
     document.getElementById('pdName').textContent = p.name;
     document.getElementById('pdPrice').textContent = `৳${Number(p.price).toLocaleString()}`;
@@ -202,9 +243,7 @@ window.openProductDetail = function (id) {
     document.getElementById('pdBuyNow').onclick = () => { addToCart(id); closeProductDetail(); openCheckout(); };
     document.getElementById('productDetailOverlay').classList.add('active');
 };
-window.closeProductDetail = function () {
-    document.getElementById('productDetailOverlay').classList.remove('active');
-};
+window.closeProductDetail = () => document.getElementById('productDetailOverlay').classList.remove('active');
 
 // ============================================
 // CART
@@ -213,9 +252,9 @@ function saveCart() { localStorage.setItem('aennas_cart', JSON.stringify(cart));
 
 function updateCartUI() {
     const count = cart.reduce((s, i) => s + i.qty, 0);
-    const countEl = document.getElementById('cartCount');
-    countEl.textContent = count;
-    countEl.classList.toggle('visible', count > 0);
+    const el = document.getElementById('cartCount');
+    el.textContent = count;
+    el.classList.toggle('visible', count > 0);
 
     const items = document.getElementById('cartItems');
     const footer = document.getElementById('cartFooter');
@@ -225,19 +264,16 @@ function updateCartUI() {
         footer.style.display = 'none';
         return;
     }
-
     items.innerHTML = cart.map(item => `
     <div class="cart-item">
-      <img class="cart-item-img" src="${item.imageUrl || ''}" alt="${item.name}"
-        onerror="this.style.display='none'"
-        style="${!item.imageUrl ? 'display:none' : ''}"/>
+      ${item.imageUrl ? `<img class="cart-item-img" src="${item.imageUrl}" alt="${item.name}" onerror="this.style.display='none'"/>` : ''}
       <div class="cart-item-info">
         <p class="cart-item-name">${item.name}</p>
         <p class="cart-item-price">৳${Number(item.price).toLocaleString()}</p>
         <div class="cart-item-qty">
-          <button class="qty-btn" onclick="changeQty('${item.id}', -1)">−</button>
+          <button class="qty-btn" onclick="changeQty('${item.id}',-1)">−</button>
           <span class="qty-num">${item.qty}</span>
-          <button class="qty-btn" onclick="changeQty('${item.id}', 1)">+</button>
+          <button class="qty-btn" onclick="changeQty('${item.id}',1)">+</button>
           <button class="cart-item-remove" onclick="removeFromCart('${item.id}')">✕</button>
         </div>
       </div>
@@ -251,35 +287,27 @@ function updateCartUI() {
 window.addToCart = function (id) {
     const p = allProducts.find(x => x.id === id);
     if (!p) return;
-    const existing = cart.find(x => x.id === id);
-    if (existing) existing.qty++;
+    const ex = cart.find(x => x.id === id);
+    if (ex) ex.qty++;
     else cart.push({ id: p.id, name: p.name, price: Number(p.price), imageUrl: p.imageUrl || '', qty: 1 });
     saveCart(); updateCartUI();
-    showToast(`${p.name} added to cart ✓`);
+    showToast(`${p.name} added ✓`);
 };
-
-window.changeQty = function (id, delta) {
+window.changeQty = function (id, d) {
     const item = cart.find(x => x.id === id);
     if (!item) return;
-    item.qty += delta;
+    item.qty += d;
     if (item.qty <= 0) cart = cart.filter(x => x.id !== id);
     saveCart(); updateCartUI();
 };
-
 window.removeFromCart = function (id) {
     cart = cart.filter(x => x.id !== id);
     saveCart(); updateCartUI();
 };
-
 window.buyNow = function (id) {
     addToCart(id);
-    toggleCart();
-    setTimeout(openCheckout, 400);
+    setTimeout(openCheckout, 200);
 };
-
-// ============================================
-// CART SIDEBAR
-// ============================================
 window.toggleCart = function () {
     document.getElementById('cartSidebar').classList.toggle('open');
     document.getElementById('cartOverlay').classList.toggle('active');
@@ -289,40 +317,25 @@ window.toggleCart = function () {
 // CHECKOUT
 // ============================================
 window.openCheckout = function () {
-    if (!cart.length) { showToast('Your cart is empty', 'error'); return; }
-    // close cart first
+    if (!cart.length) { showToast('Cart is empty', 'error'); return; }
     document.getElementById('cartSidebar').classList.remove('open');
     document.getElementById('cartOverlay').classList.remove('active');
 
-    // Build order summary
-    const summary = document.getElementById('orderSummary');
     const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-    summary.innerHTML = cart.map(i => `
-    <div class="order-summary-item">
-      <span>${i.name} × ${i.qty}</span>
-      <span>৳${(i.price * i.qty).toLocaleString()}</span>
-    </div>`).join('') + `
-    <div class="order-summary-total">
-      <span>Total</span><span>৳${total.toLocaleString()}</span>
-    </div>`;
-
+    document.getElementById('orderSummary').innerHTML =
+        cart.map(i => `<div class="order-summary-item"><span>${i.name} ×${i.qty}</span><span>৳${(i.price * i.qty).toLocaleString()}</span></div>`).join('') +
+        `<div class="order-summary-total"><span>Total</span><span>৳${total.toLocaleString()}</span></div>`;
     document.getElementById('checkoutOverlay').classList.add('active');
 };
+window.closeCheckout = () => document.getElementById('checkoutOverlay').classList.remove('active');
 
-window.closeCheckout = function () {
-    document.getElementById('checkoutOverlay').classList.remove('active');
-};
-
-// Close modals on overlay click
-document.getElementById('checkoutOverlay').addEventListener('click', function (e) {
-    if (e.target === this) closeCheckout();
-});
-document.getElementById('productDetailOverlay').addEventListener('click', function (e) {
-    if (e.target === this) closeProductDetail();
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('checkoutOverlay').addEventListener('click', e => { if (e.target.id === 'checkoutOverlay') closeCheckout(); });
+    document.getElementById('productDetailOverlay').addEventListener('click', e => { if (e.target.id === 'productDetailOverlay') closeProductDetail(); });
 });
 
 // ============================================
-// PLACE ORDER — Firestore + Google Sheets
+// PLACE ORDER
 // ============================================
 window.placeOrder = async function () {
     const name = document.getElementById('custName').value.trim();
@@ -331,122 +344,71 @@ window.placeOrder = async function () {
     const address = document.getElementById('custAddress').value.trim();
     const note = document.getElementById('custNote').value.trim();
 
-    if (!name || !phone || !address) {
-        showToast('Please fill in Name, Phone & Address', 'error'); return;
-    }
+    if (!name || !phone || !address) { showToast('Name, Phone & Address required', 'error'); return; }
 
     const btn = document.getElementById('placeOrderBtn');
     const btnText = document.getElementById('orderBtnText');
-    btn.disabled = true;
-    btnText.textContent = 'Placing Order...';
+    btn.disabled = true; btnText.textContent = 'Placing...';
 
     const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-    const orderData = {
+    const order = {
         customer: { name, phone, email, address, note },
-        items: cart,
-        total,
-        status: 'pending',
+        items: cart, total, status: 'pending',
         createdAt: new Date().toISOString(),
         orderNumber: 'AEN-' + Date.now()
     };
 
     try {
-        // 1. Save to Firestore
-        const { addDoc, collection: col } = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js");
-        await addDoc(col(db, 'orders'), orderData);
-
-        // 2. Save to Google Sheets
-        await appendToGoogleSheets(orderData);
-
-        // Success
+        await addDoc(collection(db, 'orders'), order);
+        await appendToSheets(order).catch(e => console.warn('Sheets:', e));
         cart = []; saveCart(); updateCartUI();
         closeCheckout();
-        showToast(`Order ${orderData.orderNumber} placed! ✓`, 'success');
-        ['custName', 'custPhone', 'custEmail', 'custAddress', 'custNote'].forEach(id => {
-            document.getElementById(id).value = '';
-        });
+        ['custName', 'custPhone', 'custEmail', 'custAddress', 'custNote'].forEach(id => { document.getElementById(id).value = ''; });
+        showToast(`Order ${order.orderNumber} placed! ✓`, 'success');
     } catch (err) {
-        console.error('Order error:', err);
-        showToast('Order failed. Please try WhatsApp.', 'error');
+        console.error(err);
+        showToast('Error. Try WhatsApp.', 'error');
     } finally {
-        btn.disabled = false;
-        btnText.textContent = 'Place Order';
+        btn.disabled = false; btnText.textContent = 'Place Order';
     }
 };
 
 // ============================================
-// GOOGLE SHEETS — JWT Auth + Append
+// GOOGLE SHEETS
 // ============================================
-async function appendToGoogleSheets(order) {
-    try {
-        const token = await getGoogleAccessToken();
-        const row = [
-            order.orderNumber,
-            new Date().toLocaleString('en-BD', { timeZone: 'Asia/Dhaka' }),
-            order.customer.name,
-            order.customer.phone,
-            order.customer.email,
-            order.customer.address,
-            order.items.map(i => `${i.name} x${i.qty}`).join(', '),
-            `৳${order.total.toLocaleString()}`,
-            order.status,
-            order.customer.note
-        ];
-
-        const res = await fetch(
-            `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Sheet1!A:J:append?valueInputOption=USER_ENTERED`,
-            {
-                method: 'POST',
-                headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-                body: JSON.stringify({ values: [row] })
-            }
-        );
-        if (!res.ok) throw new Error(await res.text());
-    } catch (e) {
-        console.error('Sheets error:', e);
-        // Non-fatal — order still saved in Firestore
-    }
+async function appendToSheets(order) {
+    const token = await getGToken();
+    const row = [
+        order.orderNumber,
+        new Date().toLocaleString('en-BD', { timeZone: 'Asia/Dhaka' }),
+        order.customer.name, order.customer.phone, order.customer.email,
+        order.customer.address,
+        order.items.map(i => `${i.name} x${i.qty}`).join(', '),
+        `৳${order.total.toLocaleString()}`, order.status, order.customer.note
+    ];
+    const res = await fetch(
+        `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Sheet1!A:J:append?valueInputOption=USER_ENTERED`,
+        { method: 'POST', headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ values: [row] }) }
+    );
+    if (!res.ok) throw new Error(await res.text());
 }
 
-async function getGoogleAccessToken() {
+async function getGToken() {
     const now = Math.floor(Date.now() / 1000);
-    const header = { alg: 'RS256', typ: 'JWT' };
-    const payload = {
-        iss: SERVICE_ACCOUNT_EMAIL,
-        scope: 'https://www.googleapis.com/auth/spreadsheets',
-        aud: 'https://oauth2.googleapis.com/token',
-        exp: now + 3600,
-        iat: now
-    };
-
-    const encodeB64 = obj => btoa(unescape(encodeURIComponent(JSON.stringify(obj)))).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
-    const headerB64 = encodeB64(header);
-    const payloadB64 = encodeB64(payload);
-    const sigInput = `${headerB64}.${payloadB64}`;
-
-    // Import key and sign
-    const keyData = SERVICE_ACCOUNT_KEY
-        .replace('-----BEGIN PRIVATE KEY-----', '')
-        .replace('-----END PRIVATE KEY-----', '')
-        .replace(/\s+/g, '');
-    const keyBuffer = Uint8Array.from(atob(keyData), c => c.charCodeAt(0));
-    const cryptoKey = await crypto.subtle.importKey(
-        'pkcs8', keyBuffer.buffer,
-        { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' },
-        false, ['sign']
-    );
-    const sig = await crypto.subtle.sign('RSASSA-PKCS1-v1_5', cryptoKey, new TextEncoder().encode(sigInput));
-    const sigB64 = btoa(String.fromCharCode(...new Uint8Array(sig))).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
-    const jwt = `${sigInput}.${sigB64}`;
-
-    const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: `grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer&assertion=${jwt}`
-    });
-    const data = await tokenRes.json();
-    if (!data.access_token) throw new Error('No access token');
-    return data.access_token;
+    const enc = obj => btoa(unescape(encodeURIComponent(JSON.stringify(obj)))).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
+    const h = enc({ alg: 'RS256', typ: 'JWT' });
+    const p = enc({ iss: SA_EMAIL, scope: 'https://www.googleapis.com/auth/spreadsheets', aud: 'https://oauth2.googleapis.com/token', exp: now + 3600, iat: now });
+    const si = `${h}.${p}`;
+    const kd = SA_KEY.replace(/-----BEGIN PRIVATE KEY-----|-----END PRIVATE KEY-----|\s+/g, '');
+    const kb = Uint8Array.from(atob(kd), c => c.charCodeAt(0));
+    const ck = await crypto.subtle.importKey('pkcs8', kb.buffer, { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' }, false, ['sign']);
+    const sig = await crypto.subtle.sign('RSASSA-PKCS1-v1_5', ck, new TextEncoder().encode(si));
+    const sb = btoa(String.fromCharCode(...new Uint8Array(sig))).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
+    const jwt = `${si}.${sb}`;
+    const tr = await fetch('https://oauth2.googleapis.com/token', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: `grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer&assertion=${jwt}` });
+    const td = await tr.json();
+    if (!td.access_token) throw new Error('No token');
+    return td.access_token;
 }
 
 // ============================================
@@ -467,4 +429,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initSlider();
     loadProducts();
     updateCartUI();
+    setTimeout(initScrollReveal, 500);
 });
