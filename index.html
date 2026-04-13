@@ -1,286 +1,227 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AENNAS — Premium Clothing</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Cormorant+Garamond:wght@300;400;600&family=Space+Mono:wght@400;700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AENNAS — Premium Clothing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Cormorant+Garamond:wght@300;400;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-    <div id="pageLoader" class="page-loader">
-        <div class="loader-inner">
-            <img src="https://i.ibb.co.com/gZX6t9w1/Gemini-Generated-Image-ikjxeiikjxeiikjx.png" class="loader-logo-img"
-                alt="Aennas" />
-            <div class="loader-bar-wrap">
-                <div class="loader-bar"></div>
-            </div>
-            <p class="loader-tagline">Premium Clothing</p>
+<div id="pageLoader" class="page-loader">
+  <div class="loader-inner">
+    <img src="https://i.ibb.co.com/HTDsL8Dz/4c3807f7-4c0e-4ce2-b424-e932042b5ee3.jpg" class="loader-logo-img" alt="Aennas"/>
+    <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+    <p class="loader-tagline">Premium Clothing</p>
+  </div>
+</div>
+
+<nav class="navbar" id="navbar">
+  <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-logo">
+    <img src="https://i.ibb.co.com/HTDsL8Dz/4c3807f7-4c0e-4ce2-b424-e932042b5ee3.jpg" alt="Aennas" class="nav-logo-img"/>
+  </div>
+  <div class="nav-links" id="navLinks">
+    <a href="#showroom" onclick="closeMobileMenu()">Showroom</a>
+    <a href="#products" onclick="closeMobileMenu()">Collection</a>
+    <a href="#about" onclick="closeMobileMenu()">About</a>
+  </div>
+  <div class="nav-right">
+    <button class="cart-btn" onclick="toggleCart()">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu-overlay" id="mobileOverlay" onclick="closeMobileMenu()"></div>
+
+<section class="showroom" id="showroom">
+  <div class="slider-wrapper">
+    <div class="slides-container" id="slidesContainer">
+
+      <div class="slide active" data-index="0">
+        <div class="slide-bg">
+          <img src="https://i.ibb.co.com/21Wg8Q41/Gemini-Generated-Image-mqxjtumqxjtumqxj.png" alt="Slide 1" class="slide-img"/>
+          <div class="slide-overlay"></div>
         </div>
+        <div class="slide-content">
+          <p class="slide-tag">New Season 2025</p>
+          <h1 class="slide-title">The Art<br><em>of Wearing</em></h1>
+          <p class="slide-sub">Crafted for those who demand distinction</p>
+          <a href="#products" class="slide-btn">Explore Collection</a>
+        </div>
+      </div>
+
+      <div class="slide" data-index="1">
+        <div class="slide-bg">
+          <img src="https://i.ibb.co.com/G4txC6jk/Gemini-Generated-Image-g4r6i1g4r6i1g4r6.png" alt="Slide 2" class="slide-img"/>
+          <div class="slide-overlay"></div>
+        </div>
+        <div class="slide-content">
+          <p class="slide-tag">Limited Edition</p>
+          <h1 class="slide-title">Minimal<br><em>Luxury</em></h1>
+          <p class="slide-sub">Where simplicity meets sophistication</p>
+          <a href="#products" class="slide-btn">Shop Now</a>
+        </div>
+      </div>
+
+      <div class="slide" data-index="2">
+        <div class="slide-bg">
+          <img src="https://i.ibb.co.com/jvM43m7w/Gemini-Generated-Image-ltuidiltuidiltui.png" alt="Slide 3" class="slide-img"/>
+          <div class="slide-overlay"></div>
+        </div>
+        <div class="slide-content">
+          <p class="slide-tag">Essentials</p>
+          <h1 class="slide-title">Everyday<br><em>Elegance</em></h1>
+          <p class="slide-sub">Timeless pieces for the modern wardrobe</p>
+          <a href="#products" class="slide-btn">View Essentials</a>
+        </div>
+      </div>
+
+      <div class="slide" data-index="3">
+        <div class="slide-bg">
+          <img src="https://i.ibb.co.com/YFXZMbpQ/Gemini-Generated-Image-4iu8j04iu8j04iu8.png" alt="Slide 4" class="slide-img"/>
+          <div class="slide-overlay"></div>
+        </div>
+        <div class="slide-content">
+          <p class="slide-tag">Flagship Collection</p>
+          <h1 class="slide-title">Bold.<br><em>Refined.</em></h1>
+          <p class="slide-sub">Statement pieces that define your story</p>
+          <a href="#products" class="slide-btn">Discover More</a>
+        </div>
+      </div>
+
     </div>
+    <button class="slider-arrow left" onclick="changeSlide(-1)">&#8592;</button>
+    <button class="slider-arrow right" onclick="changeSlide(1)">&#8594;</button>
+    <div class="slider-dots" id="sliderDots"></div>
+  </div>
+</section>
 
-    <nav class="navbar" id="navbar">
-        <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
-            <span></span><span></span><span></span>
-        </button>
-        <div class="nav-logo">
-            <img src="https://i.ibb.co.com/gZX6t9w1/Gemini-Generated-Image-ikjxeiikjxeiikjx.png" alt="Aennas"
-                class="nav-logo-img" />
-        </div>
-        <div class="nav-links" id="navLinks">
-            <a href="#showroom" onclick="closeMobileMenu()">Showroom</a>
-            <a href="#products" onclick="closeMobileMenu()">Collection</a>
-            <a href="#about" onclick="closeMobileMenu()">About</a>
-        </div>
-        <div class="nav-right">
-            <button class="cart-btn" onclick="toggleCart()">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
-                    <line x1="3" y1="6" x2="21" y2="6" />
-                    <path d="M16 10a4 4 0 01-8 0" />
-                </svg>
-                <span class="cart-count" id="cartCount">0</span>
-            </button>
-        </div>
-    </nav>
-    <div class="mobile-menu-overlay" id="mobileOverlay" onclick="closeMobileMenu()"></div>
-
-    <section class="showroom" id="showroom">
-        <div class="slider-wrapper">
-            <div class="slides-container" id="slidesContainer">
-
-                <div class="slide active" data-index="0">
-                    <div class="slide-bg">
-                        <img src="https://i.ibb.co.com/21Wg8Q41/Gemini-Generated-Image-mqxjtumqxjtumqxj.png"
-                            alt="Slide 1" class="slide-img" />
-                        <div class="slide-overlay"></div>
-                    </div>
-                    <div class="slide-content">
-                        <p class="slide-tag">New Season 2025</p>
-                        <h1 class="slide-title">The Art<br><em>of Wearing</em></h1>
-                        <p class="slide-sub">Crafted for those who demand distinction</p>
-                        <a href="#products" class="slide-btn">Explore Collection</a>
-                    </div>
-                </div>
-
-                <div class="slide" data-index="1">
-                    <div class="slide-bg">
-                        <img src="https://i.ibb.co.com/G4txC6jk/Gemini-Generated-Image-g4r6i1g4r6i1g4r6.png"
-                            alt="Slide 2" class="slide-img" />
-                        <div class="slide-overlay"></div>
-                    </div>
-                    <div class="slide-content">
-                        <p class="slide-tag">Limited Edition</p>
-                        <h1 class="slide-title">Minimal<br><em>Luxury</em></h1>
-                        <p class="slide-sub">Where simplicity meets sophistication</p>
-                        <a href="#products" class="slide-btn">Shop Now</a>
-                    </div>
-                </div>
-
-                <div class="slide" data-index="2">
-                    <div class="slide-bg">
-                        <img src="https://i.ibb.co.com/jvM43m7w/Gemini-Generated-Image-ltuidiltuidiltui.png"
-                            alt="Slide 3" class="slide-img" />
-                        <div class="slide-overlay"></div>
-                    </div>
-                    <div class="slide-content">
-                        <p class="slide-tag">Essentials</p>
-                        <h1 class="slide-title">Everyday<br><em>Elegance</em></h1>
-                        <p class="slide-sub">Timeless pieces for the modern wardrobe</p>
-                        <a href="#products" class="slide-btn">View Essentials</a>
-                    </div>
-                </div>
-
-                <div class="slide" data-index="3">
-                    <div class="slide-bg">
-                        <img src="https://i.ibb.co.com/YFXZMbpQ/Gemini-Generated-Image-4iu8j04iu8j04iu8.png"
-                            alt="Slide 4" class="slide-img" />
-                        <div class="slide-overlay"></div>
-                    </div>
-                    <div class="slide-content">
-                        <p class="slide-tag">Flagship Collection</p>
-                        <h1 class="slide-title">Bold.<br><em>Refined.</em></h1>
-                        <p class="slide-sub">Statement pieces that define your story</p>
-                        <a href="#products" class="slide-btn">Discover More</a>
-                    </div>
-                </div>
-
-            </div>
-            <button class="slider-arrow left" onclick="changeSlide(-1)">&#8592;</button>
-            <button class="slider-arrow right" onclick="changeSlide(1)">&#8594;</button>
-            <div class="slider-dots" id="sliderDots"></div>
-        </div>
-    </section>
-
-    <section class="products-section" id="products">
-        <div class="glow-orb orb1"></div>
-        <div class="glow-orb orb2"></div>
-        <div class="section-header">
-            <p class="section-tag">COLLECTION</p>
-            <h2 class="section-title">Featured Pieces</h2>
-            <div class="title-line"></div>
-        </div>
-        <div class="category-filter" id="categoryFilter">
-            <button class="cat-btn active" data-cat="all">All</button>
-        </div>
-        <div class="products-grid" id="productsGrid">
-            <div class="loading-spinner">
-                <div class="spinner"></div>
-                <p>Loading collection...</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="about-section" id="about">
-        <div class="glow-orb orb3"></div>
-        <div class="about-grid">
-            <div class="about-visual">
-                <div class="about-img-frame glow-frame">
-                    <div class="about-img-inner">
-                        <div class="about-pattern"></div>
-                        <img src="https://i.ibb.co.com/gZX6t9w1/Gemini-Generated-Image-ikjxeiikjxeiikjx.png"
-                            class="about-logo-img" alt="Aennas" />
-                    </div>
-                </div>
-                <div class="about-accent-box"><span>EST. 2025</span></div>
-            </div>
-            <div class="about-text">
-                <p class="section-tag">OUR STORY</p>
-                <h2>Where Fashion<br>Meets <em>Identity</em></h2>
-                <p class="about-body">AENNAS was born from a singular vision — to create clothing that doesn't just
-                    dress the body, but expresses the soul. Every thread, every cut, every stitch is a deliberate act of
-                    artistry.</p>
-                <p class="about-body">We source only the finest fabrics, partnering with artisans who share our
-                    obsession with quality. From casual everyday wear to statement pieces, AENNAS is your partner in
-                    self-expression.</p>
-                <div class="about-stats">
-                    <div class="stat"><span class="stat-num glow-gold" id="stat-products">—</span><span
-                            class="stat-label">Unique Pieces</span></div>
-                    <div class="stat"><span class="stat-num glow-gold">100%</span><span class="stat-label">Quality
-                            Fabric</span></div>
-                    <div class="stat"><span class="stat-num glow-gold">BD</span><span class="stat-label">Made with
-                            Pride</span></div>
-                </div>
-            </div>
-        </div>
-        <div class="brand-pillars">
-            <div class="pillar glow-pillar">
-                <div class="pillar-icon">✦</div>
-                <h3>Premium Fabric</h3>
-                <p>Hand-selected materials from trusted mills, ensuring comfort that lasts</p>
-            </div>
-            <div class="pillar glow-pillar">
-                <div class="pillar-icon">◈</div>
-                <h3>Artisan Craft</h3>
-                <p>Every piece constructed with precision and care by skilled artisans</p>
-            </div>
-            <div class="pillar glow-pillar">
-                <div class="pillar-icon">◉</div>
-                <h3>Timeless Design</h3>
-                <p>Beyond trends — clothing designed to remain relevant season after season</p>
-            </div>
-            <div class="pillar glow-pillar">
-                <div class="pillar-icon">⬡</div>
-                <h3>Fast Delivery</h3>
-                <p>Nationwide delivery across Bangladesh, quick and reliable</p>
-            </div>
-        </div>
-    </section>
-
-    <footer class="footer">
-        <div class="footer-inner">
-            <div class="footer-brand">
-                <img src="https://i.ibb.co.com/gZX6t9w1/Gemini-Generated-Image-ikjxeiikjxeiikjx.png"
-                    class="footer-logo-img" alt="Aennas" />
-                <p>Premium clothing for those who wear their identity with pride.</p>
-            </div>
-            <div class="footer-links">
-                <h4>Quick Links</h4>
-                <a href="#showroom">Showroom</a>
-                <a href="#products">Collection</a>
-                <a href="#about">About Us</a>
-            </div>
-            <div class="footer-contact">
-                <h4>Contact</h4>
-                <p>WhatsApp: +880 1704-743309</p>
-                <p>Bangladesh</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 AENNAS. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
-    <div class="cart-sidebar" id="cartSidebar">
-        <div class="cart-header">
-            <h3>Your Cart</h3><button onclick="toggleCart()" class="cart-close">✕</button>
-        </div>
-        <div class="cart-items" id="cartItems">
-            <div class="cart-empty">
-                <p>Your cart is empty</p>
-            </div>
-        </div>
-        <div class="cart-footer" id="cartFooter" style="display:none">
-            <div class="cart-total"><span>Total:</span><span id="cartTotal">৳0</span></div>
-            <button class="checkout-btn" onclick="openCheckout()">Proceed to Order</button>
-        </div>
+<section class="products-section" id="products">
+  <div class="glow-orb orb1"></div>
+  <div class="glow-orb orb2"></div>
+  <div class="section-header">
+    <p class="section-tag">COLLECTION</p>
+    <h2 class="section-title">Featured Pieces</h2>
+    <div class="title-line"></div>
+  </div>
+  <div class="category-filter" id="categoryFilter">
+    <button class="cat-btn active" data-cat="all">All</button>
+  </div>
+  <div class="products-grid" id="productsGrid">
+    <div class="loading-spinner">
+      <div class="spinner"></div>
+      <p>Loading collection...</p>
     </div>
+  </div>
+</section>
 
-    <div class="modal-overlay" id="checkoutOverlay">
-        <div class="checkout-modal">
-            <div class="modal-header">
-                <h3>Complete Your Order</h3><button onclick="closeCheckout()" class="modal-close">✕</button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group"><label>Full Name *</label><input type="text" id="custName"
-                        placeholder="Your full name" /></div>
-                <div class="form-group"><label>Phone Number *</label><input type="tel" id="custPhone"
-                        placeholder="+880 XXXXXXXXXX" /></div>
-                <div class="form-group"><label>Email Address</label><input type="email" id="custEmail"
-                        placeholder="your@email.com" /></div>
-                <div class="form-group"><label>Delivery Address *</label><textarea id="custAddress" rows="3"
-                        placeholder="Full delivery address"></textarea></div>
-                <div class="order-summary" id="orderSummary"></div>
-                <div class="form-group"><label>Special Instructions</label><textarea id="custNote" rows="2"
-                        placeholder="Size preferences, color, etc."></textarea></div>
-            </div>
-            <div class="modal-footer"><button class="place-order-btn" id="placeOrderBtn" onclick="placeOrder()"><span
-                        id="orderBtnText">Place Order</span></button></div>
+<section class="about-section" id="about">
+  <div class="glow-orb orb3"></div>
+  <div class="about-grid">
+    <div class="about-visual">
+      <div class="about-img-frame glow-frame">
+        <div class="about-img-inner">
+          <div class="about-pattern"></div>
+          <img src="https://i.ibb.co.com/HTw3y2dH/image.png" class="about-logo-img" alt="Aennas"/>
         </div>
+      </div>
+      <div class="about-accent-box"><span>EST. 2025</span></div>
     </div>
-
-    <div class="modal-overlay" id="productDetailOverlay">
-        <div class="product-detail-modal">
-            <button onclick="closeProductDetail()" class="modal-close top-right">✕</button>
-            <div class="pd-image"><img id="pdImg" src="" alt="product" /></div>
-            <div class="pd-info">
-                <p class="pd-category" id="pdCategory"></p>
-                <h2 id="pdName"></h2>
-                <p class="pd-price" id="pdPrice"></p>
-                <p class="pd-desc" id="pdDesc"></p>
-                <div class="pd-actions">
-                    <button class="btn-add-cart" id="pdAddCart">Add to Cart</button>
-                    <button class="btn-buy-now" id="pdBuyNow">Buy Now</button>
-                </div>
-            </div>
-        </div>
+    <div class="about-text">
+      <p class="section-tag">OUR STORY</p>
+      <h2>Where Fashion<br>Meets <em>Identity</em></h2>
+      <p class="about-body">AENNAS was born from a singular vision — to create clothing that doesn't just dress the body, but expresses the soul. Every thread, every cut, every stitch is a deliberate act of artistry.</p>
+      <p class="about-body">We source only the finest fabrics, partnering with artisans who share our obsession with quality. From casual everyday wear to statement pieces, AENNAS is your partner in self-expression.</p>
+      <div class="about-stats">
+        <div class="stat"><span class="stat-num glow-gold" id="stat-products">—</span><span class="stat-label">Unique Pieces</span></div>
+        <div class="stat"><span class="stat-num glow-gold">100%</span><span class="stat-label">Quality Fabric</span></div>
+        <div class="stat"><span class="stat-num glow-gold">BD</span><span class="stat-label">Made with Pride</span></div>
+      </div>
     </div>
+  </div>
+  <div class="brand-pillars">
+    <div class="pillar glow-pillar"><div class="pillar-icon">✦</div><h3>Premium Fabric</h3><p>Hand-selected materials from trusted mills, ensuring comfort that lasts</p></div>
+    <div class="pillar glow-pillar"><div class="pillar-icon">◈</div><h3>Artisan Craft</h3><p>Every piece constructed with precision and care by skilled artisans</p></div>
+    <div class="pillar glow-pillar"><div class="pillar-icon">◉</div><h3>Timeless Design</h3><p>Beyond trends — clothing designed to remain relevant season after season</p></div>
+    <div class="pillar glow-pillar"><div class="pillar-icon">⬡</div><h3>Fast Delivery</h3><p>Nationwide delivery across Bangladesh, quick and reliable</p></div>
+  </div>
+</section>
 
-    <a href="https://wa.me/8801704743309" target="_blank" class="whatsapp-float" title="Chat on WhatsApp">
-        <svg viewBox="0 0 32 32" width="28" height="28" fill="white">
-            <path
-                d="M16 0C7.163 0 0 7.163 0 16c0 2.822.738 5.47 2.028 7.776L0 32l8.447-2.007A15.93 15.93 0 0016 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm0 29.333a13.28 13.28 0 01-6.771-1.852l-.485-.29-5.014 1.192 1.217-4.888-.317-.502A13.28 13.28 0 012.667 16C2.667 8.636 8.636 2.667 16 2.667S29.333 8.636 29.333 16 23.364 29.333 16 29.333zm7.27-9.874c-.398-.199-2.354-1.162-2.72-1.294-.365-.133-.631-.199-.897.199-.265.398-1.03 1.294-1.262 1.56-.232.265-.465.298-.863.1-.398-.2-1.682-.62-3.203-1.977-1.184-1.057-1.982-2.363-2.214-2.761-.232-.398-.025-.613.174-.811.179-.178.398-.465.597-.697.2-.232.266-.398.399-.664.132-.265.066-.498-.033-.697-.1-.199-.897-2.163-1.23-2.961-.324-.778-.653-.672-.897-.685l-.764-.013c-.265 0-.697.1-1.062.498-.365.398-1.395 1.362-1.395 3.324 0 1.962 1.428 3.857 1.627 4.122.199.265 2.81 4.29 6.808 6.017.951.41 1.694.655 2.272.839.955.304 1.824.261 2.511.158.766-.114 2.354-.962 2.686-1.891.332-.929.332-1.726.232-1.892-.098-.165-.365-.265-.763-.464z" />
-        </svg>
-    </a>
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="https://i.ibb.co.com/HTDsL8Dz/4c3807f7-4c0e-4ce2-b424-e932042b5ee3.jpg" class="footer-logo-img" alt="Aennas"/>
+      <p>Premium clothing for those who wear their identity with pride.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <a href="#showroom">Showroom</a>
+      <a href="#products">Collection</a>
+      <a href="#about">About Us</a>
+    </div>
+    <div class="footer-contact">
+      <h4>Contact</h4>
+      <p>WhatsApp: +880 1704-743309</p>
+      <p>Bangladesh</p>
+    </div>
+  </div>
+  <div class="footer-bottom"><p>&copy; 2025 AENNAS. All rights reserved.</p></div>
+</footer>
 
-    <script type="module" src="app.js"></script>
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header"><h3>Your Cart</h3><button onclick="toggleCart()" class="cart-close">✕</button></div>
+  <div class="cart-items" id="cartItems"><div class="cart-empty"><p>Your cart is empty</p></div></div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-total"><span>Total:</span><span id="cartTotal">৳0</span></div>
+    <button class="checkout-btn" onclick="openCheckout()">Proceed to Order</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="checkoutOverlay">
+  <div class="checkout-modal">
+    <div class="modal-header"><h3>Complete Your Order</h3><button onclick="closeCheckout()" class="modal-close">✕</button></div>
+    <div class="modal-body">
+      <div class="form-group"><label>Full Name *</label><input type="text" id="custName" placeholder="Your full name"/></div>
+      <div class="form-group"><label>Phone Number *</label><input type="tel" id="custPhone" placeholder="+880 XXXXXXXXXX"/></div>
+      <div class="form-group"><label>Email Address</label><input type="email" id="custEmail" placeholder="your@email.com"/></div>
+      <div class="form-group"><label>Delivery Address *</label><textarea id="custAddress" rows="3" placeholder="Full delivery address"></textarea></div>
+      <div class="order-summary" id="orderSummary"></div>
+      <div class="form-group"><label>Special Instructions</label><textarea id="custNote" rows="2" placeholder="Size preferences, color, etc."></textarea></div>
+    </div>
+    <div class="modal-footer"><button class="place-order-btn" id="placeOrderBtn" onclick="placeOrder()"><span id="orderBtnText">Place Order</span></button></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="productDetailOverlay">
+  <div class="product-detail-modal">
+    <button onclick="closeProductDetail()" class="modal-close top-right">✕</button>
+    <div class="pd-image"><img id="pdImg" src="" alt="product"/></div>
+    <div class="pd-info">
+      <p class="pd-category" id="pdCategory"></p>
+      <h2 id="pdName"></h2>
+      <p class="pd-price" id="pdPrice"></p>
+      <p class="pd-desc" id="pdDesc"></p>
+      <div class="pd-actions">
+        <button class="btn-add-cart" id="pdAddCart">Add to Cart</button>
+        <button class="btn-buy-now" id="pdBuyNow">Buy Now</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a href="https://wa.me/8801704743309" target="_blank" class="whatsapp-float" title="Chat on WhatsApp">
+  <svg viewBox="0 0 32 32" width="28" height="28" fill="white">
+    <path d="M16 0C7.163 0 0 7.163 0 16c0 2.822.738 5.47 2.028 7.776L0 32l8.447-2.007A15.93 15.93 0 0016 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm0 29.333a13.28 13.28 0 01-6.771-1.852l-.485-.29-5.014 1.192 1.217-4.888-.317-.502A13.28 13.28 0 012.667 16C2.667 8.636 8.636 2.667 16 2.667S29.333 8.636 29.333 16 23.364 29.333 16 29.333zm7.27-9.874c-.398-.199-2.354-1.162-2.72-1.294-.365-.133-.631-.199-.897.199-.265.398-1.03 1.294-1.262 1.56-.232.265-.465.298-.863.1-.398-.2-1.682-.62-3.203-1.977-1.184-1.057-1.982-2.363-2.214-2.761-.232-.398-.025-.613.174-.811.179-.178.398-.465.597-.697.2-.232.266-.398.399-.664.132-.265.066-.498-.033-.697-.1-.199-.897-2.163-1.23-2.961-.324-.778-.653-.672-.897-.685l-.764-.013c-.265 0-.697.1-1.062.498-.365.398-1.395 1.362-1.395 3.324 0 1.962 1.428 3.857 1.627 4.122.199.265 2.81 4.29 6.808 6.017.951.41 1.694.655 2.272.839.955.304 1.824.261 2.511.158.766-.114 2.354-.962 2.686-1.891.332-.929.332-1.726.232-1.892-.098-.165-.365-.265-.763-.464z"/>
+  </svg>
+</a>
+
+<script type="module" src="app.js"></script>
 </body>
-
 </html>
